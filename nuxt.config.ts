@@ -1,4 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config';
+
 export default defineNuxtConfig({
   app: {
     pageTransition: {
@@ -76,7 +77,7 @@ export default defineNuxtConfig({
 
   hooks: {
     'vite:extendConfig': (config, { isClient }) => {
-      if (isClient) {
+      if (isClient && config.resolve?.alias) {
         config.resolve.alias.vue = 'vue/dist/vue.esm-bundler';
       }
     },
@@ -88,7 +89,7 @@ export default defineNuxtConfig({
   },
 
   typescript: {
-    strict: false,
+    strict: true,
   },
 
   eslint: {
