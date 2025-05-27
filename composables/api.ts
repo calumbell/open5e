@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/vue-query';
 import axios from 'axios';
-import { unref } from 'vue';
+import { navigateTo, useRoute, useRuntimeConfig } from 'nuxt/app';
+import type { MaybeRef, Ref } from 'vue';
+import { computed, unref } from 'vue';
+import { useSourcesList } from './sources';
 
 export const API_ENDPOINTS = {
   backgrounds: 'v2/backgrounds/',
@@ -19,7 +22,7 @@ export const API_ENDPOINTS = {
 
 /** Provides the base functions to easily fetch data from the Open5e API. */
 export const useAPI = () => {
-  const API_URL = useRuntimeConfig().public.apiUrl;
+  const API_URL = useRuntimeConfig().public.apiUrl as string;
 
   const api = axios.create({
     baseURL: API_URL,
@@ -30,7 +33,7 @@ export const useAPI = () => {
     findMany: async (
       endpoint: string,
       sources: string[],
-      params: Record<string, never> = {},
+      params: Record<string, unknown> = {},
     ) => {
       const formattedSources
         = sources.length > 0 ? sources.join(',') : 'no-sources';
@@ -42,7 +45,7 @@ export const useAPI = () => {
         },
       });
 
-      return res.data.results as Record<string, never>[];
+      return res.data.results as Record<string, unknown>[];
     },
     findPaginated: async (options: {
       endpoint: string;
@@ -123,9 +126,9 @@ export const useFindMany = (
  * @returns The data object with nested resources fetched.
  */
 const fetchNestedResources = async (
-  data: Record<string, never>,
+  data: Record<string, unknown>,
   fields: string[],
-): Promise<Record<string, never>> => {
+): Promise<Record<string, unknown>> => {
   for (const field of fields) {
     const fieldParts = field.split('.');
     let currentData = data;
@@ -137,7 +140,7 @@ const fetchNestedResources = async (
       if (currentData[part]) {
         parentData = currentData;
         parentKey = part;
-        currentData = currentData[part];
+        currentData = currentData[part] as Record<string, unknown>;
       } else {
         (currentData as Record<string, null>)[part] = null;
         break;
@@ -157,7 +160,10 @@ const fetchNestedResources = async (
         .filter(f => f.startsWith(`${field}.`))
         .map(f => f.slice(field.length + 1));
       if (nestedFields.length > 0) {
-        await fetchNestedResources(parentData[parentKey], nestedFields);
+        await fetchNestedResources(
+          parentData[parentKey] as Record<string, unknown>,
+          nestedFields,
+        );
       }
     }
   }
@@ -212,29 +218,6 @@ export const useFindByLink = (link: MaybeRef<string>) => {
   });
 };
 
-export const useSubclass = (className: string, subclass: string) => {
-  const api = useAPI();
-  return useQuery({
-    queryKey: ['subclass', className, subclass],
-    queryFn: async () => {
-      const class_result = await api.get(API_ENDPOINTS.classes, className);
-      return class_result.archetypes.find((a: never) => a.slug === subclass);
-    },
-  });
-};
-
-export const useSections = (...categories: string[]) => {
-  const { data: sections, isPending } = useFindMany(API_ENDPOINTS.sections, {
-    fields: ['slug', 'name', 'parent'].join(),
-  });
-  const filtered_sections = computed(() =>
-    sections.value?.filter(section =>
-      categories.includes(`${section.parent}`),
-    ),
-  );
-  return { data: filtered_sections, isPending };
-};
-
 /**
  * Returns a new array of items sorted by the given field
  */
@@ -256,7 +239,6 @@ export function sortByField(
 }
 
 export const useDocuments = (params: Record<string, never> = {}) => {
-  params.depth = '1';
   const { findMany } = useAPI();
   return useQuery({
     queryKey: ['findMany', API_ENDPOINTS.documents, params],

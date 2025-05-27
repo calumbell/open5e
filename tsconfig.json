@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
