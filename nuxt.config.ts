@@ -88,15 +88,5 @@ export default defineNuxtConfig({
     strict: true,
   },
 
-  eslint: {
-    config: {
-      stylistic: {
-        quotes: 'single',
-        semi: true,
-        braceStyle: '1tbs',
-      },
-    },
-  },
-
   compatibilityDate: '2024-11-16',
 });
