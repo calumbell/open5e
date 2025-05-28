@@ -55,7 +55,10 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/eslint',
-    '@nuxtjs/tailwindcss',
+    ['@nuxtjs/tailwindcss', {
+      configPath: '~/tailwind.config.ts',
+      cssPath: '~/styles/tailwind.css',
+    }],
     'nuxt-icon',
     '@hebilicious/vue-query-nuxt',
     '@nuxt/test-utils/module',
@@ -79,11 +82,6 @@ export default defineNuxtConfig({
         };
       }
     },
-  },
-
-  tailwindcss: {
-    configPath: '~/tailwind.config.ts',
-    cssPath: '~/styles/tailwind.css',
   },
 
   typescript: {
