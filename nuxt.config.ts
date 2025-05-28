@@ -61,10 +61,6 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
   ],
 
-  queryClientOptions: {
-    defaultOptions: { queries: { staleTime: Infinity } },
-  },
-
   runtimeConfig: {
     public: {
       apiUrl: process.env.API_URL || 'https://api.open5e.com',
