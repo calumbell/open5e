@@ -124,7 +124,7 @@
           @input="
             filterState.updateField(
               checkbox.filterField,
-              $event.target.checked ? true : undefined,
+              $event?.target?.checked ? true : undefined,
             )
           "
         />
@@ -144,6 +144,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Fields, FilterState } from '~/composables/useFilterState';
+
 defineProps<
   {
     filterState: FilterState<Fields>;

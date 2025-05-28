@@ -79,7 +79,7 @@ export const useAPI = () => {
 
       const data = res.data as {
         count: number;
-        results: Record<string, never>[];
+        results: Record<string, unknown>[];
         next: string | null;
         previous: string | null;
       };
@@ -93,7 +93,7 @@ export const useAPI = () => {
         const searchTerm = parts.filter(exists => exists).slice(-1)[0];
         navigateTo(`/search?text=${searchTerm}`);
       });
-      return res?.data as Record<string, never>;
+      return res?.data as Record<string, unknown>;
     },
   };
 };

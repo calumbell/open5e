@@ -135,8 +135,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
-import { computed } from 'vue';
+import { useIsFetching } from '@tanstack/vue-query';
+import { useHead, useRoute, useRouter } from 'nuxt/app';
+import { computed, ref, watch } from 'vue';
 import EncounterBuilder from '~/components/EncounterBuilder.vue';
 import EncounterSummary from '~/components/EncounterSummary.vue';
 
