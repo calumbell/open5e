@@ -29,7 +29,10 @@ export const useMonster = (slug: string) => {
         name: ability,
         shortName: ability.slice(0, 3),
         score: monster[ability],
-        modifier: useFormatModifier(monster[ability], { inputType: 'score' }),
+        modifier: useFormatModifier(
+          monster[ability] as string | undefined,
+          { inputType: 'score' },
+        ),
         save: monster[`${ability}_save`],
       }));
       return monster as Record<string, string>;

@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 type Notification = {
   title: string;
-  body: string;
+  body: string | number;
   footer: string;
 };
 
