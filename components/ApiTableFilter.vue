@@ -84,7 +84,10 @@
         class="cursor-pointer bg-transparent fill-red text-center"
         :value="filterState.fieldsState.value[field.filterField]"
         @input="
-          filterState.updateField(field.filterField, $event?.target.value)
+          filterState.updateField(
+            field.filterField,
+            ($event?.target as HTMLInputElement).value
+          )
         "
       >
         <option value="">

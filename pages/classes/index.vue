@@ -42,6 +42,11 @@
 </template>
 
 <script setup lang="ts">
+import { useFilterState } from '@/composables/useFilterState';
+import { useFindPaginated } from '@/composables/useFindPaginated';
+import { useSortState } from '@/composables/useSortState';
+import { API_ENDPOINTS } from '~/composables/api';
+
 // Set up filters
 const filterState = useFilterState<{ name__contains: string }>({
   key: 'classes',

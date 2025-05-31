@@ -318,7 +318,11 @@
 </template>
 
 <script setup lang="ts">
-import { useEncounterStore } from '~/composables/useEncounter';
+import { useEncounterStore } from '@/composables/useEncounter';
+import { useFormatModifier } from '@/composables/useFormatModifier';
+import { useRoute } from 'nuxt/app';
+import { computed } from 'vue';
+import { API_ENDPOINTS, useFindOne } from '~/composables/api';
 
 const route = useRoute();
 const params = {
@@ -341,7 +345,7 @@ const initiativeBonus = computed(() => {
 // Sort monster actions by type (ie. 'action', 'bonus action', 'reaction').
 // rtrns an object whose keys are action types & vals are arrays of actions.
 const actions = computed(() => {
-  if (!monster?.value?.actions) return {};
+  if (!monster?.value?.actions) return [];
   const actionsByType = monster.value.actions.reduce(
     (output, action) => {
       const { action_type: actionType } = action;

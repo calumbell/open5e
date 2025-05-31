@@ -3,6 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 withDefaults(defineProps<{ challenge: string | number }>(), { challenge: '0' });
 
 const experience = computed(() => {

@@ -54,7 +54,7 @@ export const useAPI = () => {
       itemsPerPage?: number;
       sortByProperty?: string;
       isSortDescending?: boolean;
-      queryParams?: Record<string, never>;
+      queryParams?: Record<string, unknown>;
     }) => {
       const {
         endpoint,

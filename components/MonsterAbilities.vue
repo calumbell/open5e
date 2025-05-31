@@ -104,6 +104,7 @@
 <script lang="ts" setup>
 import { useFormatModifier } from '@/composables/useFormatModifier';
 import { useDiceRoller } from '@/composables/useDiceRoller';
+import { computed } from 'vue';
 
 const props = defineProps({
   monster: { type: Object, default: () => {} },

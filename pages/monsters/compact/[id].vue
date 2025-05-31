@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { navigateTo } from 'nuxt/app';
+import { definePageMeta } from 'nuxt/dist/pages/runtime';
+
 // Register middleware with page metadata
 definePageMeta({
   middleware: [

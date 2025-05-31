@@ -107,6 +107,12 @@
 </template>
 
 <script setup lang="ts">
+import { API_ENDPOINTS } from '~/composables/api';
+import type { SpellFilter } from '~/composables/spells';
+import { useFilterState } from '~/composables/useFilterState';
+import { useFindPaginated } from '~/composables/useFindPaginated';
+import { useSortState } from '~/composables/useSortState';
+
 // Set up filters
 const filterState = useFilterState<SpellFilter>({
   key: 'spells',

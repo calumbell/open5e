@@ -83,6 +83,17 @@
 </template>
 
 <script setup lang="ts">
+import { API_ENDPOINTS } from '@/composables/api';
+import { useFindPaginated } from '@/composables/useFindPaginated';
+import type { MagicItemFilter } from '~/composables/magic-items';
+import { DefaultMagicItemFilter } from '~/composables/magic-items';
+import { useFilterState } from '~/composables/useFilterState';
+import { useSortState } from '~/composables/useSortState';
+import { 
+  MAGIC_ITEMS_TYPES,
+  MAGIC_ITEMS_RARITES 
+} from '@/composables/magic-items';
+
 // Set up filters
 const filterState = useFilterState<MagicItemFilter>({
   key: 'magicItems',

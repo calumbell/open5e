@@ -143,7 +143,20 @@
 import { h, computed } from 'vue';
 import { PlusIcon, MinusIcon } from '@heroicons/vue/24/solid';
 import type { Monster } from '~/types/monster';
+import { 
+  MONSTER_TYPES_LIST,
+  MONSTER_SIZES_LIST
+} from '@/composables/monsters';
 import { useEncounterStore } from '~/composables/useEncounter';
+import { useFindPaginated } from '~/composables/useFindPaginated';
+import { API_ENDPOINTS } from '~/composables/api';
+import type { MonsterFilter } from '~/composables/monsters';
+import { 
+  DefaultMonsterFilter,
+  MONSTER_CHALLENGE_RATINGS_MAP
+} from '~/composables/monsters';
+import { useFilterState } from '~/composables/useFilterState';
+import { useSortState } from '~/composables/useSortState';
 
 // Set up filters
 const filterState = useFilterState<MonsterFilter>({

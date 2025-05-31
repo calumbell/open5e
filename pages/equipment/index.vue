@@ -74,6 +74,11 @@
 </template>
 
 <script setup lang="ts">
+import { API_ENDPOINTS } from '~/composables/api';
+import { useFilterState } from '~/composables/useFilterState';
+import { useFindPaginated } from '~/composables/useFindPaginated';
+import { useSortState } from '~/composables/useSortState';
+
 // Set up filters
 const filterState = useFilterState<{ name__icontains: string }>({
   key: 'equipment',
