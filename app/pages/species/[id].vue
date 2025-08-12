@@ -53,7 +53,7 @@
         />
         <dl>
           <div
-            v-for="trait in species.traits"
+            v-for="trait in item.traits"
             :key="trait.name"
             class="my-2"
           >
