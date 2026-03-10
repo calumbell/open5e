@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/vue-query';
 import axios from 'axios';
-import { navigateTo, useRoute, useRuntimeConfig } from 'nuxt/app';
+import { useRoute, useRuntimeConfig } from 'nuxt/app';
 import { computed, unref } from 'vue';
 import { useSourcesList } from './useSourcesList';
 import type { components } from '~/types/open5e-api';
@@ -139,8 +139,12 @@ export const useAPI = () => {
       const route = [endpoint, ...parts].join('');
       const res = await api.get(route).catch(() => {
         // redirect to /search if API route returns nothing
-        const searchTerm = parts.filter(exists => exists).slice(-1)[0];
-        navigateTo(`/search?text=${searchTerm}`);
+        const key = parts.filter(Boolean).slice(-1)[0];
+        throw createError({
+          statusCode: 404,
+          statusMessage: `Failed to fetch resource with key: ${key}`,
+          data: { key },
+        });
       });
       return res?.data;
     },
