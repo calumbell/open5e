@@ -6,11 +6,7 @@
 
         <h2>Error {{ error?.statusCode }}</h2>
 
-        <p
-          v-if="error?.message"
-          class="font-italics"
-          v-text="error.message"
-        />
+        <p v-if="error?.message">{{ error.message }}</p>
 
         <button
           class="font-bold text-red hover:text-blood dark:text-indigo-200 dark:hover:text-red"
@@ -89,12 +85,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  error: {
-    type: Object,
-    default: () => null,
-  },
-});
+import type { Open5eError } from '@/composables/api';
+
+defineProps<{ error: Open5eError | null }>();
 
 const handleError = () => clearError({ redirect: '/' });
 </script>
